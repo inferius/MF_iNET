@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Obsahuje seznam výchozích hodnot pro dané tagy -->
+<Tags>
+  <!-- 
+  Popis atributu elementu Tag
+  ===========================
+  shadow-name = udavá jméno pouze pro definici, které lze použít v definici pro extend/parent, ale sam se nebude aplikovat na žádný element, bez přechozího urrčení dědičností (výjma shadow-name=global)
+  name = udavá jméno skutečného elementu
+  extend = attribut obahuje shadow-name nadřazené definice, lze použít více věcí oddělěných pomocí čárek, pokud v jednotlivých definicích kolidují hodnoty, dojde k přepsání poslední vzanou definici, čte se z leva do prava
+  parent = attribut obsahuje name nadřazené definice, lze použít více věcí oddělěných pomocí čárek, pokud v jednotlivých definicích kolidují hodnoty, dojde k přepsání poslední vzanou definici, čte se z leva do prava
+           [Nejdřívé se vyhodnocuje extend a potom parent, takže hodnoty z extend budou přepsány hodnotamy s parent]
+  -->
+  <Tag shadow-name="global"> <!-- Tag global je globální prvek pro všechny tagy, který se neudává do pole parent, čerpají z něj uplně všechny automaticky -->
+    
+  </Tag>
+ 
+  <Tag name="div">
+    
+  </Tag>
+</Tags>

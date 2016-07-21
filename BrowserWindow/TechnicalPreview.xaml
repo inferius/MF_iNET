@@ -1,0 +1,20 @@
+﻿<Window x:Class="BrowserWindow.TechnicalPreview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BrowserWindow"
+        mc:Ignorable="d"
+        Title="TechnicalPreview" Height="712.125" Width="1109">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Page">
+                <Frame Content="{Binding}" x:Name="pageFrame" NavigationUIVisibility="Hidden"></Frame>
+            </TabItem>
+            <TabItem Header="Source">
+                <Frame Content="{Binding}" x:Name="sourceFrame" NavigationUIVisibility="Hidden"></Frame>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Window>

@@ -1,0 +1,399 @@
+﻿<div id="div_popup_container">
+    <div id="div_popup_center">
+        <h1 class="h1_popup">Přidání požadavku</h1>
+        <div class="div_bug_line">
+            <label class="b_label" for="ins_proj_name">
+                Typ požadavku <font color="red">*</font>:
+            </label>
+            <select class="b_select">
+                <option>Oprava / Chyba</option>
+                <option>Úprava / Dodělávka</option>
+                <option>Jiné</option>
+            </select>
+        </div> 
+        <div class="div_bug_line">
+            <label class="b_label" for="ins_proj_name">
+                Stav požadavku <font color="red">*</font>:
+            </label>
+            <select class="b_select">
+                <option>Čekající</option>
+                <option>Rozpracovaný</option>
+                <option>Dokončený</option>
+                <option>Zrušený</option>
+            </select>
+        </div>         
+        <div class="div_bug_line">
+            <label class="b_label" for="ins_proj_name">
+                Priorita <font color="red">*</font>:
+            </label>
+            <select class="b_select">
+                <option>Normální</option>
+                <option>Důležité</option>
+                <option>Urgentní</option>
+            </select>
+        </div>                   
+        <div class="div_bug_line">
+            <label class="b_label" for="ins_proj_name">
+                Název požadavku <font color="red">*</font>:
+            </label>
+            <input type="text" class="b_input" id="ins_proj_name" name="ins_proj_name">
+        </div>
+        <div class="div_bug_line">
+            <label class="b_label">
+                Popis požadavku <font color="red">*</font>:
+            </label>
+            <textarea class="b_textarea" style="height:70px;"></textarea>
+        </div>             
+        <div class="div_bug_line">
+            <label class="b_label" for="ins_proj_name">
+                Přiložit soubory / odkazy:
+            </label>
+            <div class="div_add_files">
+                <div class="div_add_file_line">
+                    1)
+                    <input type="text" class="b_input" id="Text1" name="ins_proj_name">
+                    <div class="btn_main div_file_upload"></div>
+                </div>
+                <div class="div_add_file_line">
+                    2)
+                    <input type="text" class="b_input" id="Text2" name="ins_proj_name">
+                    <div class="btn_main div_file_upload"></div>
+                </div>
+                <div class="div_add_file_line">
+                    3)
+                    <input type="text" class="b_input" id="Text3" name="ins_proj_name">
+                    <div class="btn_main div_file_upload"></div>
+                </div>
+                <div class="div_add_file_line">
+                    4)
+                    <input type="text" class="b_input" id="Text4" name="ins_proj_name">
+                    <div class="btn_main div_file_upload"></div>
+                </div>                        
+                <div class="div_add_file_line">
+                    ..)
+                    <input type="text" class="b_input" id="Text5" name="ins_proj_name">
+                    <div class="btn_main div_file_upload"></div>
+                </div>  
+            </div>
+        </div>  
+
+        <a href="javascript:closePopUp()" class="btn_main red" style="float:left; margin-top:20px; margin-left:15px;">Zrušit</a>
+        <a href="" class="btn_main green" style="float:right; margin-top:20px; margin-right:15px;">Uložit</a>
+
+    </div>
+</div>      
+
+
+<div id="div_content_wrap" style="margin-top:100px;">
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////  Projekt  /////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->      
+    <div class="div_page_container" id="welcome">
+        <table class="table_main_title" style="margin-top:25px;">
+            <tr>
+                <td class="bg"></td>
+                <td width="470px"><h1>I-Klett.cz</h1></td>
+                <td class="bg"></td>
+            </tr>
+        </table> 
+        <p class="p_main_text">        
+            Seznam připomínem, oprav a úprav.
+        </p>
+        <?php if (is_admin() || is_company_admin()) { ?>
+            <a href="javascript:addProject()" style="float:right;" class="btn_squer_icon blue add"></a>
+        <?php } ?>
+        <div class="div_white_line_c">
+            <div class="div_status_line" title="Čekající"></div>
+            <table class="full_width_table">
+                <tr>
+                    <td onclick="openMoreInfo($(this).parent().parent().parent().parent())">
+                        <h2 style="font-size:20px;">Platnost kupónů<h2>
+                                </td>
+                                <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="490px" style="line-height:15px;">
+                                    <span style="font-size:15px;">Lorem ipsum doloris sit ames un principy sit doloresimu ames princiups it. Lorem ipsum doloris sit ames un principy sit doloresimu ames princiups it.</span>
+                                </td>                
+                                <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="130px" style="text-align:center;">
+                                    <span style="font-size:15px;">14.10.2012</span>
+                                </td>               
+                                <td width="100px" style="height:80px;">
+                                    <a href="" style="float:right; margin-right:25px;" class="btn_squer_icon red remove"></a>
+                                    <a href="" style="float:right; margin-right:10px;" class="btn_squer_icon green edit"></a>
+                                </td> 
+                                </tr>
+                                </table>
+                                <div class="div_more_line_info">
+
+                                    <div class="div_sub_info_line">
+                                        <div class="div_sub_info_left">
+                                            <h3 class="line_h3" style="font-size:20px;">Diskuze:<h3>
+                                                    </div>
+                                                    <div class="div_sub_info_right">
+                                                        <a href="#" onclick="addDiscusionPost($(this).next())" style="float:left; margin-top:10px;margin-right:10px;" class="btn_squer_icon blue add"></a>
+                                                        <div class="div_discusion_post add" style="border-color:#6899ae;">
+                                                            <div class="div_post_left">
+                                                                <div class="div_post_title"><input type="text" def-value="Předmět" value="Předmět"></div>
+                                                                <div class="div_post_content">
+                                                                    <textarea def-value="Zpráva ...">Zpráva ...</textarea>                        
+                                                                </div>
+                                                                <div class="div_sub_info_right post">
+                                                                    <a href="" target="_blank" class="div_file_c"><span>1) Přidat soubor</span></a>
+                                                                </div>                      
+                                                                <div class="div_post_author">
+                                                                    Marcela Bartůňková                            
+                                                                </div>             
+
+                                                            </div>   
+                                                            <div class="div_post_right">
+                                                                <div class="div_post_date">14.10.2012</div>
+                                                                <div class="btn_main red" style="font-size:12px; margin:5px 0 0 4px; width:60px; text-align:center;">Zrušit</div>
+                                                                <div class="btn_main green" style="font-size:12px; margin:5px 0 0 4px; width:60px; text-align:center;">Přidat</div>
+                                                            </div>               
+                                                        </div>                    
+
+
+                                                    </div>
+                                                    </div>              
+
+                                                    </div>            
+                                                    <div class="div_type_line oprava" title="Oprava / Problém"></div>
+                                                    </div>
+
+                                                    <div class="div_white_line_c">
+                                                        <div class="div_status_line rozpracovano" title="Rozpracováno"></div>
+                                                        <table class="full_width_table">
+                                                            <tr>
+                                                                <td onclick="openMoreInfo($(this).parent().parent().parent().parent())">
+                                                                    <h2 style="font-size:20px;">Platnost kupónů<h2>
+                                                                            </td>
+                                                                            <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="490px" style="line-height:15px;">
+                                                                                <span style="font-size:15px; line-height:20px;">
+                                                                                    Lorem ipsum doloris sit ames un principy ames sit un principi lorem ipsum dolores sit doloresimu ames princiups it. Lorem ipsum doloris sit ames un principy sit doloresimu ames princiups it<span class="hide_tecky">...</span>
+                                                                                    <span class="span_more_description" style="font-size:15px;">
+                                                                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+                                                                                    </span>
+                                                                                </span>
+                                                                            </td>                
+                                                                            <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="130px" style="text-align:center;">
+                                                                                <span style="font-size:15px;">14.10.2012</span>
+                                                                            </td>        
+                                                                            <td width="100px" style="height:80px;">
+                                                                                <a href="" style="float:right; margin-right:25px;" class="btn_squer_icon red remove"></a>
+                                                                                <a href="" style="float:right; margin-right:10px;" class="btn_squer_icon green edit"></a>
+                                                                            </td> 
+                                                                            </tr>
+                                                                            </table>
+                                                                            <div class="div_more_line_info">
+                                                                                <div class="div_sub_info_line">
+                                                                                    <div class="div_sub_info_left">
+                                                                                        <h3 class="line_h3" style="font-size:20px;">Soubory:<h3>
+                                                                                                </div>
+                                                                                                <div class="div_sub_info_right">
+                                                                                                    <a href="" target="_blank" class="div_file_c jpg"><span>1) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                    <a href="" target="_blank" class="div_file_c rar"><span>2) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                    <a href="" target="_blank" class="div_file_c ai"><span>3) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                    <a href="" target="_blank" class="div_file_c psd"><span>4) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                    <a href="" target="_blank" class="div_file_c doc"><span>5) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                    <a href="" target="_blank" class="div_file_c xls"><span>6) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                    <a href="" target="_blank" class="div_file_c another"><span>7) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                </div>                
+                                                                                                </div>
+
+                                                                                                <div class="div_sub_info_line">
+                                                                                                    <div class="div_sub_info_left">
+                                                                                                        <h3 class="line_h3" style="font-size:20px;">Diskuze:<h3>
+                                                                                                                </div>
+                                                                                                                <div class="div_sub_info_right">
+                                                                                                                    <a href="#" onclick="addDiscusionPost($(this).next())" style="float:left; margin-top:10px;margin-right:10px;" class="btn_squer_icon blue add"></a>
+
+
+                                                                                                                    <div class="div_discusion_post add" style="border-color:#6899ae;">
+                                                                                                                        <div class="div_post_left">
+                                                                                                                            <div class="div_post_title"><input type="text" def-value="Předmět" value="Předmět"></div>
+                                                                                                                            <div class="div_post_content">
+                                                                                                                                <textarea def-value="Zpráva ...">Zpráva ...</textarea>                        
+                                                                                                                            </div>
+                                                                                                                            <div class="div_sub_info_right post">
+                                                                                                                                <a href="" target="_blank" class="div_file_c"><span>1) Přidat soubor</span></a>
+                                                                                                                            </div>                      
+                                                                                                                            <div class="div_post_author">
+                                                                                                                                Marcela Bartůňková                            
+                                                                                                                            </div>             
+
+                                                                                                                        </div>   
+                                                                                                                        <div class="div_post_right">
+                                                                                                                            <div class="div_post_date">14.10.2012</div>
+                                                                                                                            <div class="btn_main red" style="font-size:12px; margin:5px 0 0 4px; width:60px; text-align:center;">Zrušit</div>
+                                                                                                                            <div class="btn_main green" style="font-size:12px; margin:5px 0 0 4px; width:60px; text-align:center;">Přidat</div>
+                                                                                                                        </div>               
+                                                                                                                    </div>                  
+
+
+                                                                                                                    <div class="div_discusion_post">
+                                                                                                                        <div class="div_post_left">
+                                                                                                                            <div class="div_post_title">Opraveno</div>
+                                                                                                                            <div class="div_post_content">
+                                                                                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                                                                                                            </div>
+                                                                                                                            <div class="div_sub_info_right post">
+                                                                                                                                <a href="" target="_blank" class="div_file_c jpg"><span>1) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                                                <a href="" target="_blank" class="div_file_c jpg"><span>2) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                                                <a href="" target="_blank" class="div_file_c jpg"><span>3) lorem_ipsum_doloris_sit_ames.jpg</span></a>
+                                                                                                                            </div>                      
+                                                                                                                            <div class="div_post_author">
+                                                                                                                                Marcela Bartůňková                            
+                                                                                                                            </div>             
+
+                                                                                                                        </div>   
+                                                                                                                        <div class="div_post_right">
+                                                                                                                            <div class="div_post_date">14.10.2012</div>
+                                                                                                                            <div class="btn_main blue" style="font-size:12px; margin:5px 0 0 4px;">Odpovědět</div>
+                                                                                                                        </div>               
+                                                                                                                    </div>
+
+                                                                                                                    <div class="div_discusion_post re">
+                                                                                                                        <div class="div_post_left">
+                                                                                                                            <div class="div_post_title">RE: Opraveno</div>
+                                                                                                                            <div class="div_post_content">
+                                                                                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                                                                                                            </div>                    
+                                                                                                                            <div class="div_post_author">
+                                                                                                                                Tomáš Hubík                             
+                                                                                                                            </div>             
+
+                                                                                                                        </div>   
+                                                                                                                        <div class="div_post_right">
+                                                                                                                            <div class="div_post_date">14.10.2012</div>
+                                                                                                                            <div class="btn_main blue" style="font-size:12px; margin:5px 0 0 4px;">Odpovědět</div>
+                                                                                                                        </div>               
+                                                                                                                    </div>     
+
+                                                                                                                    <div class="div_discusion_post">
+                                                                                                                        <div class="div_post_left">
+                                                                                                                            <div class="div_post_title">Dokončeno</div>
+                                                                                                                            <div class="div_post_content">
+                                                                                                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                                                                                                            </div>                     
+                                                                                                                            <div class="div_post_author">
+                                                                                                                                Marcela Bartůňková                            
+                                                                                                                            </div>             
+
+                                                                                                                        </div>   
+                                                                                                                        <div class="div_post_right">
+                                                                                                                            <div class="div_post_date">14.10.2012</div>
+                                                                                                                            <div class="btn_main blue" style="font-size:12px; margin:5px 0 0 4px;">Odpovědět</div>
+                                                                                                                        </div>               
+                                                                                                                    </div>                               
+
+                                                                                                                </div>
+                                                                                                                </div>              
+
+                                                                                                                </div>
+                                                                                                                <div class="div_type_line uprava" title="Úprava / Dodělávka"></div>
+                                                                                                                </div>
+
+                                                                                                                <div class="div_white_line_c">
+                                                                                                                    <div class="div_status_line hotovo" title="Hotovo"></div>
+                                                                                                                    <table class="full_width_table">
+                                                                                                                        <tr>
+                                                                                                                            <td onclick="openMoreInfo($(this).parent().parent().parent().parent())">
+                                                                                                                                <h2 style="font-size:20px;">Platnost kupónů<h2>
+                                                                                                                                        </td>
+                                                                                                                                        <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="490px" style="line-height:15px;">
+                                                                                                                                            <span style="font-size:15px;">Lorem ipsum doloris sit ames un principy sit doloresimu ames princiups it. Lorem ipsum doloris sit ames un principy sit doloresimu ames princiups it.</span>
+                                                                                                                                        </td>                
+                                                                                                                                        <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="130px" style="text-align:center;">
+                                                                                                                                            <span style="font-size:15px;">14.10.2012</span>
+                                                                                                                                        </td>              
+                                                                                                                                        <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="100px" style="height:80px;">
+                                                                                                                                            <a href="" style="float:right; margin-right:25px;" class="btn_squer_icon red remove"></a>
+                                                                                                                                            <a href="" style="float:right; margin-right:10px;" class="btn_squer_icon green edit"></a>
+                                                                                                                                        </td> 
+                                                                                                                                        </tr>
+                                                                                                                                        </table>
+                                                                                                                                        <div class="div_type_line oprava"></div>
+                                                                                                                                        </div>
+
+                                                                                                                                        <div class="div_white_line_c">
+                                                                                                                                            <div class="div_status_line zruseno" title="Zrušeno"></div>
+                                                                                                                                            <table class="full_width_table">
+                                                                                                                                                <tr>
+                                                                                                                                                    <td onclick="openMoreInfo($(this).parent().parent().parent().parent())">
+                                                                                                                                                        <h2 style="font-size:20px;">Platnost kupónů<h2>
+                                                                                                                                                                </td>
+                                                                                                                                                                <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="490px" style="line-height:15px;">
+                                                                                                                                                                    <span style="font-size:15px;">Lorem ipsum doloris sit ames un principy sit doloresimu ames princiups it. Lorem ipsum doloris sit ames un principy sit doloresimu ames princiups it.</span>
+                                                                                                                                                                </td>                
+                                                                                                                                                                <td onclick="openMoreInfo($(this).parent().parent().parent().parent())" width="130px" style="text-align:center;">
+                                                                                                                                                                    <span style="font-size:15px;">14.10.2012</span>
+                                                                                                                                                                </td>                
+                                                                                                                                                                <td width="100px" style="height:80px;">
+                                                                                                                                                                    <a href="" style="float:right; margin-right:25px;" class="btn_squer_icon red remove"></a>
+                                                                                                                                                                    <a href="" style="float:right; margin-right:10px;" class="btn_squer_icon green edit"></a>
+                                                                                                                                                                </td> 
+                                                                                                                                                                </tr>
+                                                                                                                                                                </table>
+                                                                                                                                                                <div class="div_type_line oprava"></div>
+                                                                                                                                                                </div>
+
+                                                                                                                                                                </div>     
+
+
+
+                                                                                                                                                                <!--
+                                                                                                                                                                ////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                                                                ////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                                                                /////////////////////////////////////  Kontakty  ///////////////////////////////////
+                                                                                                                                                                ////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                                                                ////////////////////////////////////////////////////////////////////////////////////
+                                                                                                                                                                -->
+
+                                                                                                                                                                <div class="div_del_page dark">
+                                                                                                                                                                    <div class="div_dark_bg">
+                                                                                                                                                                        <div class="div_page_container" id="contact">
+                                                                                                                                                                            <table class="table_main_title">
+                                                                                                                                                                                <tr>
+                                                                                                                                                                                    <td class="bg"></td>
+                                                                                                                                                                                    <td width="175px"><h1 style="color:white;">Kontakt</h1></td>
+                                                                                                                                                                                    <td class="bg"></td>
+                                                                                                                                                                                </tr>
+                                                                                                                                                                            </table>    
+                                                                                                                                                                            <div class="p_main_text" style="width:60%;">
+                                                                                                                                                                                <strong>Tomáš Hubík</strong>
+                                                                                                                                                                                <br>
+                                                                                                                                                                                <div class="ul_arrow_list contacts">
+                                                                                                                                                                                    <div class="li">Telefon<span class="spa_dotted_line">........</span><strong class="span_green">+420 774 510 211</strong></div>
+                                                                                                                                                                                    <div class="li">E-mail<span class="spa_dotted_line">..........</span><strong class="span_green">Tomas.Hubik1@gmail.com</strong></div>
+                                                                                                                                                                                    <div class="li">Skype<span class="spa_dotted_line">..........</span><strong class="span_green">TomasHubik</strong></div>
+                                                                                                                                                                                    <div class="li">Facebook<span class="spa_dotted_line" style="padding-right:13px;">.....</span><strong class="span_green"><a href="http://www.facebook.com/pages/Tom%C3%A1%C5%A1-Hub%C3%ADk-Grafick%C3%A9-studio/174000805991365" target="_black">T.H. Grafické studio</a></strong></div>
+                                                                                                                                                                                    <div class="li">IČ<span class="spa_dotted_line" style="padding-right:15px;">...............</span><strong class="span_green">74864131</strong></div>
+                                                                                                                                                                                </div>  
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <div class="p_main_text" style="width:40%;">
+                                                                                                                                                                                <strong>Napište nám</strong>
+                                                                                                                                                                                <div class="div_contacts_input">
+                                                                                                                                                                                    <input type="text" value="E-Mail ..." def_value="E-Mail ..."> 
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="div_contacts_input">
+                                                                                                                                                                                    <input type="text" value="Jméno a příjmení ..." def_value="Jméno a příjmení ..."> 
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="div_contacts_input">
+                                                                                                                                                                                    <input type="text" value="Předmět ..." def_value="Předmět ..."> 
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="div_contacts_textarea">
+                                                                                                                                                                                    <textarea value="Dotaz ..." def_value="Dotaz ...">Dotaz ...</textarea> 
+                                                                                                                                                                                </div>    
+                                                                                                                                                                                <a href="" class="a_send_btn">
+                                                                                                                                                                                    <div class="div_white">Odeslat dotaz</div>
+                                                                                                                                                                                    <div class="div_shadow">Odeslat dotaz</div>
+                                                                                                                                                                                </a>                                      
+                                                                                                                                                                            </div>            
+                                                                                                                                                                        </div>
+                                                                                                                                                                    </div>          
+                                                                                                                                                                </div>     
+                                                                                                                                                                </div>
+                                                                                                                                                                </body>
+                                                                                                                                                                </html>

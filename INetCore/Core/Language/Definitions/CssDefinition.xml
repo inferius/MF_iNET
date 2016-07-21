@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language>
+  <Property>
+    <Name>Position</Name>
+    <CssInfo version="1" />
+    <Values>
+      <Value isRegEx="false">Absolute</Value>
+      <Value isRegEx="false">Relative</Value>
+      <Value isRegEx="false">Fixed</Value>
+      <Value isRegEx="false">Static</Value>
+    </Values>
+  </Property>
+  
+  <Property>
+    <Name>Left</Name>
+    <CssInfo version="1" />
+    <Values>
+      <Group>numbers_px</Group>
+    </Values>
+  </Property>
+  
+  <Property>
+    <Name>Right</Name>
+    <CssInfo version="1" />
+    <Values>
+      <Group>numbers_px</Group>
+    </Values>
+  </Property>
+  
+  <Property>
+    <Name>Top</Name>
+    <CssInfo version="1" />
+    <Values>
+      <Group>numbers_px</Group>
+    </Values>
+  </Property>
+  
+  <Property>
+    <Name>Bottom</Name>
+    <CssInfo version="1" />
+    <Values>
+      <Group>numbers_px</Group>
+    </Values>
+  </Property>
+
+  <Property>
+    <Name>Height</Name>
+    <CssInfo version="1" />
+    <Values>
+      <Group>numbers_px</Group>
+      <Value>Auto</Value>
+    </Values>
+  </Property>
+
+  <Property>
+    <Name>Height</Name>
+    <CssInfo version="1" />
+    <Values>
+      <Group>numbers_px</Group>
+      <Value>Width</Value>
+    </Values>
+  </Property>
+
+  <ValueGroups>
+    <ValueGroup name="numbers_px">
+      <Value isRegEx="true">([0-9]+(\.[0-9]+)?)[pt|px|%|em|ex|cm|mm|pc|rem|in]?</Value>
+      <Value isRegEx="true">calc\(([0-9]+[pt|px|%|em|ex|cm|mm|pc|rem|in]?[-|+|*|/]?)+\)</Value>
+    </ValueGroup>
+  </ValueGroups>
+</Language>
