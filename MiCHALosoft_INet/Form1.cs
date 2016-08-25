@@ -181,7 +181,7 @@ namespace MiCHALosoft_INet
             //dta.Show();
 
             var ss = new CoreClass();
-            var t = System.IO.File.ReadAllText("C:\\Temp\\test.html");
+            var t = System.IO.File.ReadAllText("C:\\Temp\\test2.html");
             //var tag = ss.ParseString(t);
             var completeList = new List<INetCore.Drawing.Objects.BaseObject>(100);
             main = ss.ToBaseObjects(bw, t, completeList);

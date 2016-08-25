@@ -34,6 +34,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -74,17 +78,19 @@
     <Compile Include="Core\Language\CSS\Styles\SizeStyles.cs" />
     <Compile Include="Core\Language\CSS\Values\CssColorValue.cs" />
     <Compile Include="Core\Language\CSS\Values\HSLColor.cs" />
+    <Compile Include="Core\Language\Javascript\Actions\ActionGroup.cs" />
+    <Compile Include="Core\Language\Javascript\Actions\AssingAction.cs" />
+    <Compile Include="Core\Language\Javascript\Actions\AsyncAction.cs" />
+    <Compile Include="Core\Language\Javascript\Actions\IActions.cs" />
+    <Compile Include="Core\Language\Javascript\Actions\ReturnActions.cs" />
+    <Compile Include="Core\Language\Javascript\Parser\Tokenize.cs" />
+    <Compile Include="Core\Language\Javascript\Tokens\BlockScope.cs" />
+    <Compile Include="Core\Language\Javascript\Tokens\Function.cs" />
+    <Compile Include="Core\Language\Javascript\Tokens\Variable.cs" />
     <Compile Include="Drawing\Objects\MeasuredUnit.cs" />
-    <Compile Include="Core\Language\JavaScript\EventManager.cs" />
     <Compile Include="Core\Language\HTML\CoreClass.cs" />
     <Compile Include="Core\Language\HTML\CoreClass.HtmlTagsDefinition.cs" />
     <Compile Include="Core\Language\HTML\SyntaxAnalysis.cs" />
-    <Compile Include="Core\Language\JavaScript\Events\Mouse\Click.cs" />
-    <Compile Include="Core\Language\JavaScript\Events\Mouse\Hover.cs" />
-    <Compile Include="Core\Language\JavaScript\Events\Mouse\MouseEnum.cs" />
-    <Compile Include="Core\Language\JavaScript\jQuery.cs" />
-    <Compile Include="Core\Language\JavaScript\Object.cs" />
-    <Compile Include="Core\Language\JSON\CoreClass.cs" />
     <Compile Include="Core\Net\Request.cs" />
     <Compile Include="Drawing\BrowserWindow.cs">
       <SubType>UserControl</SubType>
@@ -111,6 +117,7 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="Core\Language\HTML\CoreClass.HtmlVersion.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BrowserTools\DeveloperToolsAlpha.resx">
@@ -125,7 +132,9 @@
     <Content Include="Core\Language\Definitions\CssDefinition.xml" />
     <Content Include="Core\Language\Definitions\DefaultValues.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Language\Javascript\Events\Console\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

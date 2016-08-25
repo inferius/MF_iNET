@@ -11,8 +11,6 @@ namespace INetCore.Drawing.Objects
     {
         #region Set delegates and events
         // udalost clicku
-        public delegate void ObjectClick(object sender, Core.Language.JavaScript.Events.Mouse.Click e);
-        public event ObjectClick OnObjectClick;
 
         #endregion
 
@@ -40,7 +38,6 @@ namespace INetCore.Drawing.Objects
         private Core.Language.HTML.HtmlTag _objType = null;
         private Core.Language.HTML.CoreClass _htmlCoreClass = null;
 
-        private Core.Language.JavaScript.EventManager _eventManager = new Core.Language.JavaScript.EventManager();
 
         private List<Core.Language.CSS.CssProperty> _cssProperties = new List<Core.Language.CSS.CssProperty>(); // pouzite vlastnosti
 
@@ -246,7 +243,7 @@ namespace INetCore.Drawing.Objects
         {
             //System.Windows.Forms.Cursor.Position
 
-            _browser.Click += new EventHandler(browser_Click);
+            _browser.Click += browser_Click;
         }
 
         // zpracovaní kliknuti do prohlížeče
@@ -260,7 +257,6 @@ namespace INetCore.Drawing.Objects
             {
                 Console.WriteLine($"[{Background.Color}] Click: {cp}");
 
-                OnObjectClick?.Invoke(this, new Core.Language.JavaScript.Events.Mouse.Click(null, this, _parent, Core.Language.JavaScript.Events.Mouse.MouseButton.Left));
             }
             //throw new NotImplementedException();
         }
