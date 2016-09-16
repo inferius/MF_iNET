@@ -87,6 +87,7 @@
     <Compile Include="Core\Language\Javascript\Tokens\BlockScope.cs" />
     <Compile Include="Core\Language\Javascript\Tokens\Function.cs" />
     <Compile Include="Core\Language\Javascript\Tokens\Variable.cs" />
+    <Compile Include="Drawing\Objects\DisplayProperties\DisplayFlexProperty.cs" />
     <Compile Include="Drawing\Objects\MeasuredUnit.cs" />
     <Compile Include="Core\Language\HTML\CoreClass.cs" />
     <Compile Include="Core\Language\HTML\CoreClass.HtmlTagsDefinition.cs" />
