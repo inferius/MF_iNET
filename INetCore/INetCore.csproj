@@ -83,6 +83,10 @@
     <Compile Include="Core\Language\Javascript\Actions\AsyncAction.cs" />
     <Compile Include="Core\Language\Javascript\Actions\IActions.cs" />
     <Compile Include="Core\Language\Javascript\Actions\ReturnActions.cs" />
+    <Compile Include="Core\Language\Javascript\Exceptions\JavaScriptExceptions.cs" />
+    <Compile Include="Core\Language\Javascript\Exceptions\SyntaxException.cs" />
+    <Compile Include="Core\Language\Javascript\Parser\Keywords.cs" />
+    <Compile Include="Core\Language\Javascript\Parser\LexicalToken.cs" />
     <Compile Include="Core\Language\Javascript\Parser\Tokenize.cs" />
     <Compile Include="Core\Language\Javascript\Tokens\BlockScope.cs" />
     <Compile Include="Core\Language\Javascript\Tokens\Function.cs" />
@@ -132,6 +136,7 @@
     <Content Include="Core\Language\CSS\DefaultStyleSheets\webkit_spec.css" />
     <Content Include="Core\Language\Definitions\CssDefinition.xml" />
     <Content Include="Core\Language\Definitions\DefaultValues.xml" />
+    <Content Include="Core\Language\Javascript\TestFiles\TestFunction.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Language\Javascript\Events\Console\" />

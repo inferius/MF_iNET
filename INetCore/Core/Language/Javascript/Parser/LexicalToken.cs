@@ -6,16 +6,7 @@ using System.Threading.Tasks;
 
 namespace INetCore.Core.Language.Javascript.Parser
 {
-    public class Tokenize
+    public class LexicalToken
     {
-        Tokenize(string jsString)
-        {
-            
-        }
-
-        public void Parse(string jsString)
-        {
-            
-        }
     }
 }

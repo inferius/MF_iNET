@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
 
 namespace INetCore.Core.Language.CSS.Values
 {
@@ -97,7 +89,7 @@ namespace INetCore.Core.Language.CSS.Values
             }
             else
             {
-                double t1, t2;
+                double t2;
                 var th = Hue / 6.0d;
 
                 if (Luminosity < 0.5d)
@@ -108,12 +100,11 @@ namespace INetCore.Core.Language.CSS.Values
                 {
                     t2 = (Luminosity + Saturation) - (Luminosity * Saturation);
                 }
-                t1 = 2d * Luminosity - t2;
+                var t1 = 2d * Luminosity - t2;
 
-                double tr, tg, tb;
-                tr = th + (1.0d / 3.0d);
-                tg = th;
-                tb = th - (1.0d / 3.0d);
+                var tr = th + (1.0d / 3.0d);
+                var tg = th;
+                var tb = th - (1.0d / 3.0d);
 
                 tr = ColorCalc(tr, t1, t2);
                 tg = ColorCalc(tg, t1, t2);
