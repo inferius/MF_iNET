@@ -20,12 +20,16 @@ namespace BrowserWindow.DrawingObjects
         protected Shape _basePolygon;
         protected Canvas drawCanvas;
 
+        private bool mouseDownPressed = false;
+        private Shape _lastMouseDownPressedObject = null;
+
         public BaseDrawObject(BaseObject baseObject, Canvas drawCanvas)
         {
             this.baseObject = baseObject;
             this.drawCanvas = drawCanvas;
 
-            
+            //drawCanvas.MouseUp
+
         }
 
         public virtual void Draw(BaseObject _bo = null)
@@ -70,12 +74,55 @@ namespace BrowserWindow.DrawingObjects
                 new TextDrawObject(_bo, drawCanvas).Draw();
             }
 
+            registerEvents(_basePolygon, _bo, drawCanvas);
+
             foreach (var o in _bo.Childrens)
             {
                 Draw(o);
             }
             _bo.RefreshAfterDraw();
-            
         }
+
+        private void registerEvents(Shape obj, BaseObject bo, Canvas drawWindow)
+        {
+            obj.MouseEnter += (sender, e) =>
+            {
+                bo.FireEvent("mousein", null);
+            };
+            obj.MouseLeave += (sender, e) =>
+            {
+                bo.FireEvent("mouseout", null);
+            };
+
+            obj.MouseMove += (sender, e) =>
+            {
+                bo.FireEvent("mousemove", null);
+            };
+
+            obj.MouseWheel += (sender, e) =>
+            {
+                bo.FireEvent("mousewheel", null);
+            };
+
+            obj.MouseDown += (sender, e) =>
+            {
+                mouseDownPressed = true;
+                _lastMouseDownPressedObject = obj;
+                bo.FireEvent("mousedown", null);
+            };
+
+            obj.MouseUp += (sender, e) =>
+            {
+                if (mouseDownPressed && _lastMouseDownPressedObject == obj)
+                {
+                    mouseDownPressed = false;
+                    _lastMouseDownPressedObject = null;
+                    bo.FireEvent("click", null);
+
+                }
+                bo.FireEvent("mouseup", null);
+            };
+        }
+
     }
 }

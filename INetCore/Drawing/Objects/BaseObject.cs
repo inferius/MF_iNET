@@ -239,11 +239,9 @@ namespace INetCore.Drawing.Objects
             Init();
         }
 
-        private void AllocEvents()
+        public void FireEvent(string eventName, object eventData)
         {
-            //System.Windows.Forms.Cursor.Position
-
-            _browser.Click += browser_Click;
+            Console.WriteLine($"[{Background.Color}] {eventName}: {eventData}");
         }
 
         // zpracovaní kliknuti do prohlížeče
@@ -286,7 +284,6 @@ namespace INetCore.Drawing.Objects
                 TagName = "div",
                 TagType = _htmlCoreClass.GetTagDefinitionByTagName("div")
             };
-            AllocEvents();
         }
 
         public void ApplyProperty(Core.Language.CSS.Styles.BaseStyle prop)

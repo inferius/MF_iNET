@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using INetCore.BrowserTools;
 using INetCore.Core.Language.CSS;
 using INetCore.Core.Language.CSS.Values;
 using CoreClass = INetCore.Core.Language.HTML.CoreClass;
