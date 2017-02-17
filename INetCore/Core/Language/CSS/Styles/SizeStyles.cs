@@ -20,6 +20,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             //bo.Width = StyleValue;
             var o = StyleValue as MeasuredUnit;
             if (o != null) bo.Width = o;
@@ -44,6 +45,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             //bo.Height = StyleValue;
             var o = StyleValue as MeasuredUnit;
             if (o != null) bo.Height = o;

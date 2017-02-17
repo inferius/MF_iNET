@@ -33,7 +33,7 @@ namespace INetCore.BrowserTools
         private TreeNode _writeToTree(BaseObject _obj)
         {
             var t = new TreeNode();
-            t.Text = string.Format("{0}{1}", _obj.ObjectType.TagName, string.IsNullOrEmpty(_obj.InnerText) ? "" : "[" + _obj.InnerText + "]");
+            t.Text = $"{_obj.ObjectType.Name}{(string.IsNullOrEmpty(_obj.InnerText) ? "" : "[" + _obj.InnerText + "]")}";
             t.Tag = _obj;
 
             foreach (var o in _obj.Childrens)

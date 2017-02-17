@@ -28,6 +28,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             //bo.Float = StyleValue;
             var o = (Drawing.Objects.Float)StyleValue;
             bo.Float = o;

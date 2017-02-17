@@ -20,6 +20,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             var o = StyleValue as MeasuredUnit;
             if (o != null) bo.ObjectPosition.Left = o;
         }
@@ -43,6 +44,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             var o = StyleValue as MeasuredUnit;
             if (o != null) bo.ObjectPosition.Right = o;
             //bo.ObjectPosition.Right = StyleValue;
@@ -67,6 +69,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             //bo.ObjectPosition.Top = StyleValue;
             var o = StyleValue as MeasuredUnit;
             if (o != null) bo.ObjectPosition.Top = o;
@@ -91,6 +94,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             //bo.ObjectPosition.Bottom = StyleValue;
             var o = StyleValue as MeasuredUnit;
             if (o != null) bo.ObjectPosition.Bottom = o;

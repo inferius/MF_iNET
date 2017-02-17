@@ -1,4 +1,9 @@
-﻿namespace INetCore.Core.Exception
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace INetCore.Core.Exception
 {
     class HtmlSyntaxException : System.Exception
     {

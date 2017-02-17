@@ -30,6 +30,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             //bo.PositionType = StyleValue;
             var o = (PositionType)StyleValue;
             bo.PositionType = o;

@@ -34,10 +34,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -59,12 +55,13 @@
       <DependentUpon>DeveloperToolsAlpha.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Exception\HtmlSyntaxException.cs" />
+    <Compile Include="Core\Exception\NotValidCSSName.cs" />
     <Compile Include="Core\Exception\NotValidCSSPropertyException.cs" />
     <Compile Include="Core\Exception\NotValidCSSValueException.cs" />
     <Compile Include="Core\Exception\NotValidPropertyException.cs" />
-    <Compile Include="Core\Language\CSS\ClassesTree.cs" />
     <Compile Include="Core\Language\CSS\CoreClass.cs" />
     <Compile Include="Core\Language\CSS\CoreClass.CssParser.cs" />
+    <Compile Include="Core\Language\CSS\css2xpath.cs" />
     <Compile Include="Core\Language\CSS\CSSLinq.cs" />
     <Compile Include="Core\Language\CSS\Style.cs" />
     <Compile Include="Core\Language\CSS\StylesRegistrator.cs" />
@@ -78,24 +75,46 @@
     <Compile Include="Core\Language\CSS\Styles\SizeStyles.cs" />
     <Compile Include="Core\Language\CSS\Values\CssColorValue.cs" />
     <Compile Include="Core\Language\CSS\Values\HSLColor.cs" />
-    <Compile Include="Core\Language\Javascript\Actions\ActionGroup.cs" />
-    <Compile Include="Core\Language\Javascript\Actions\AssingAction.cs" />
-    <Compile Include="Core\Language\Javascript\Actions\AsyncAction.cs" />
-    <Compile Include="Core\Language\Javascript\Actions\IActions.cs" />
-    <Compile Include="Core\Language\Javascript\Actions\ReturnActions.cs" />
-    <Compile Include="Core\Language\Javascript\Exceptions\JavaScriptExceptions.cs" />
-    <Compile Include="Core\Language\Javascript\Exceptions\SyntaxException.cs" />
-    <Compile Include="Core\Language\Javascript\Parser\Keywords.cs" />
-    <Compile Include="Core\Language\Javascript\Parser\LexicalToken.cs" />
-    <Compile Include="Core\Language\Javascript\Parser\Tokenize.cs" />
-    <Compile Include="Core\Language\Javascript\Tokens\BlockScope.cs" />
-    <Compile Include="Core\Language\Javascript\Tokens\Function.cs" />
-    <Compile Include="Core\Language\Javascript\Tokens\Variable.cs" />
-    <Compile Include="Drawing\Objects\DisplayProperties\DisplayFlexProperty.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\crc32.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\EncodingFoundException.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlAttribute.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlAttributeCollection.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlCmdLine.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlCommentNode.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlConsoleListener.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlDocument.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlElementFlag.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlEntity.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlNameTable.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlNode.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlNodeCollection.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlNodeNavigator.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlNodeType.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlParseError.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlParseErrorCode.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlTextNode.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlWeb.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\HtmlWebException.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\IOLibrary.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\MixedCodeDocument.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\MixedCodeDocumentCodeFragment.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\MixedCodeDocumentFragment.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\MixedCodeDocumentFragmentList.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\MixedCodeDocumentFragmentType.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\MixedCodeDocumentTextFragment.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\NameValuePair.cs" />
+    <Compile Include="Core\Language\HTML\HtmlAgilityPack\NameValuePairList.cs" />
     <Compile Include="Drawing\Objects\MeasuredUnit.cs" />
+    <Compile Include="Core\Language\JavaScript\EventManager.cs" />
     <Compile Include="Core\Language\HTML\CoreClass.cs" />
     <Compile Include="Core\Language\HTML\CoreClass.HtmlTagsDefinition.cs" />
     <Compile Include="Core\Language\HTML\SyntaxAnalysis.cs" />
+    <Compile Include="Core\Language\JavaScript\Events\Mouse\Click.cs" />
+    <Compile Include="Core\Language\JavaScript\Events\Mouse\Hover.cs" />
+    <Compile Include="Core\Language\JavaScript\Events\Mouse\MouseEnum.cs" />
+    <Compile Include="Core\Language\JavaScript\jQuery.cs" />
+    <Compile Include="Core\Language\JavaScript\Object.cs" />
+    <Compile Include="Core\Language\JSON\CoreClass.cs" />
     <Compile Include="Core\Net\Request.cs" />
     <Compile Include="Drawing\BrowserWindow.cs">
       <SubType>UserControl</SubType>
@@ -122,7 +141,6 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="Core\Language\HTML\CoreClass.HtmlVersion.cs" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BrowserTools\DeveloperToolsAlpha.resx">
@@ -136,10 +154,6 @@
     <Content Include="Core\Language\CSS\DefaultStyleSheets\webkit_spec.css" />
     <Content Include="Core\Language\Definitions\CssDefinition.xml" />
     <Content Include="Core\Language\Definitions\DefaultValues.xml" />
-    <Content Include="Core\Language\Javascript\TestFiles\TestFunction.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Language\Javascript\Events\Console\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

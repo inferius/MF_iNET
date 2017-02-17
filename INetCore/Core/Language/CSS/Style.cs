@@ -10,6 +10,7 @@ namespace INetCore.Core.Language.CSS
     public class Style
     {
         public string FullName { get; set; }
+        public CSSNameToken Name { get; set; }
         public BaseStyle[] Styles { get; set; }
         public int Priority { get; set; } = 0;
 

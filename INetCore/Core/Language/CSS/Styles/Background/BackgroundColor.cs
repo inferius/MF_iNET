@@ -22,6 +22,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             var o = StyleValue as CssColorValue;
             if (o != null) bo.Background.Color = o.Color;
         }

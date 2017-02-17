@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using INetCore.Drawing.Objects;
-using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 
 namespace BrowserWindow.DrawingObjects

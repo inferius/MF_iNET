@@ -33,7 +33,7 @@ namespace INetCore.Core.Language.CSS.Styles
             Type type = enumerationValue.GetType();
             if (!type.IsEnum)
             {
-                throw new ArgumentException("EnumerationValue must be of Enum type", nameof(enumerationValue));
+                throw new ArgumentException("EnumerationValue must be of Enum type", "enumerationValue");
             }
 
             //Tries to find a DescriptionAttribute for a potential friendly name
@@ -74,6 +74,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public override void ApplyStyle(BaseObject bo)
         {
+            base.ApplyStyle(bo);
             var o = (DisplayPropertyType)StyleValue;
             if (bo.Display == null) bo.Display = new DisplayProperty();
             bo.Display.Type = o;

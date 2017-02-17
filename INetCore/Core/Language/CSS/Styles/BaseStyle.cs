@@ -22,7 +22,7 @@ namespace INetCore.Core.Language.CSS.Styles
 
         public virtual void ApplyStyle(BaseObject bo)
         {
-            throw new NotImplementedException();
+            bo._cssProperties[Name] = this;
         }
 
         public virtual string GetValueToText()

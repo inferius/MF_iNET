@@ -8,9 +8,11 @@
         Title="TechnicalPreview" Height="712.125" Width="1109">
     <Grid>
         <TabControl>
+            
             <TabItem Header="Page">
                 <Frame Content="{Binding}" x:Name="pageFrame" NavigationUIVisibility="Hidden"></Frame>
             </TabItem>
+
             <TabItem Header="Source">
                 <Frame Content="{Binding}" x:Name="sourceFrame" NavigationUIVisibility="Hidden"></Frame>
             </TabItem>

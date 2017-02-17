@@ -157,388 +157,51 @@ namespace INetCore.Core.Language.HTML
             return ret.ToString();
         }
 
-        public BaseObject ToBaseObjects(BrowserWindow parent, string html, List<BaseObject> fullList = null)
+        public BaseObject ToBaseObjects(BrowserWindow parent, HtmlAgilityPack.HtmlDocument _doc)
         {
-            var p = ParseString(html);
-            if (p.Length > 1 || p.Length == 0) throw new FormatException("Web page have'nt root element");
-            return ToBaseObjects(parent, p[0], fullList);
+            return ToBaseObjects(parent, _doc.DocumentNode);
         }
-        public BaseObject ToBaseObjects(BrowserWindow parent, HtmlTag tag, List<BaseObject> fullList = null)
+
+        public BaseObject ToBaseObjects(BrowserWindow parent, HtmlAgilityPack.HtmlNode tag)
         {
             var bo = new BaseObject(parent);
             tagProcessing(tag, bo);
-            ToBaseObjects(bo, tag.InnerTags, fullList);
+            ToBaseObjects(bo, tag.ChildNodes);
 
             return bo;
         }
-        public void ToBaseObjects(BaseObject parent, HtmlTag[] tags, List<BaseObject> fullList = null)
+        public void ToBaseObjects(BaseObject parent, IEnumerable<HtmlAgilityPack.HtmlNode> tags)
         {
             foreach (var tag in tags)
             {
                 var bo = new BaseObject(parent);
                 tagProcessing(tag, bo);
                 //parent.Childrens.Add(bo);
-                fullList?.Add(bo);
 
-                ToBaseObjects(bo, tag.InnerTags);
+                ToBaseObjects(bo, tag.ChildNodes);
             }
         }
 
-        private static void tagProcessing(HtmlTag tag, BaseObject bo)
+        private static void tagProcessing(HtmlAgilityPack.HtmlNode tag, BaseObject bo)
         {
-            foreach (var attribute in tag.HtmlAttributes)
+            foreach (var attribute in tag.Attributes)
             {
-                if (attribute.AttributeName == "style")
+                if (attribute.Name == "style")
                 {
-                    bo.ApplyStyles(attribute.AttributeValue);
+                    //TODO: Zrušit aplikování stylu přímo tady, provést jej až v CSSLinq
+                    //bo.ApplyStyles(attribute.AttributeValue);
                 }
-                else if (attribute.AttributeName == "class")
+                else if (attribute.Name == "class")
                 {
-                    tag.ClassList.AddRange(attribute.AttributeValue.Trim().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(item => item.Trim()).Where(item => item.Length > 0));
+                    tag.ClassList.AddRange(attribute.Value.Trim().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(item => item.Trim()).Where(item => item.Length > 0));
                 }
             }
             bo.ObjectType = tag;
+            tag.BaseObject = bo;
         }
 
-        public HtmlTag[] ParseString(string input)
-        {
-            input = CleanString(input);
+        // TODO: Udelat vlastni parsovani dokumentu
 
-            List<HtmlTag> ret = new List<HtmlTag>();
-            List<string> warning_list = new List<string>();
-
-            HtmlTag buf_tag = new HtmlTag();
-            HtmlAttribute buf_attr = new HtmlAttribute();
-
-            StringBuilder buf = new StringBuilder();
-            var textBuf = new StringBuilder();
-            var commentBuf = new StringBuilder();
-
-
-            int begin_start_tag = -1;
-            int end_start_tag = -1;
-            int begin_end_tag = -1;
-            int end_end_tag = -1;
-            int equal_tag_count = 0;
-
-            int buf_begin_tag = -1;
-            int buf_end_tag = -1;
-
-            bool begin_tag = false;
-            bool end_tag = false;
-            bool char_request = false;
-            bool tag_name_waiting = false;
-            bool attr_value_waiting = false;
-            bool isBuf_end_tag = false;
-            var inComment = false;
-
-            char begin_str = '\0';
-
-            int count_line = 0;
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (inComment)
-                {
-                    if (input[i] == '-' && i + 1 < input.Length && i + 2 < input.Length && input[i + 1] == '-' && input[i + 2] == '>')
-                    {
-                        inComment = false;
-                        i += 2;
-
-                        var commentTag = new HtmlTag
-                        {
-                            TagName = "#comment",
-                            InnerHtml = commentBuf.ToString()
-                        };
-
-                        buf_tag._innerTags.Add(commentTag);
-                        commentBuf.Clear();
-                    }
-                    else commentBuf.Append(input[i]);
-                    continue;
-                }
-                if (char_request)
-                {
-                    if (char.IsLetter(input[i]))
-                    {
-                        char_request = false;
-                    }
-                    else
-                    {
-                        if (_htmlVersionType == HtmlVersionType.Strict)
-                        {
-                            throw new HtmlSyntaxException("Byly očekávány pismena", count_line, "");
-                        }
-
-                        warning_list.Add($"Byly očekávány pismena|{count_line}");
-                        continue;
-                    }
-                }
-
-                // zapsaní prostého textu nalezeného v attributu
-                if (!tag_name_waiting && !begin_tag)
-                {
-                    if (input[i] == '<')
-                    {
-                        if (textBuf.Length > 0)
-                        {
-                            var textTag = new HtmlTag
-                            {
-                                TagName = "#text",
-                                InnerHtml = textBuf.ToString()
-                            };
-
-                            //buf_tag._innerTags.Add(textTag);
-                            ret.Add(textTag);
-                            textBuf.Clear();
-                        }
-                    }
-                    else
-                    {
-                        textBuf.Append(input[i]);
-                        continue;
-                    }
-                }
-
-                if (char.IsLetterOrDigit(input[i]))
-                {
-                    if (tag_name_waiting)
-                    {
-                        buf.Append(input[i]);
-                    }
-                    else if (begin_tag && !tag_name_waiting && end_start_tag == -1 && !attr_value_waiting) // nacitani názvu atributu.
-                    {
-                        buf.Append(input[i]);
-                    }
-                    else if (begin_tag && end_start_tag == -1 && attr_value_waiting) // nacitani názvu atributu
-                    {
-                        buf.Append(input[i]);
-                    }
-                    else if (buf_begin_tag >= 0)
-                    {
-                        buf.Append(input[i]);
-                    }
-                }
-                else if (char.IsWhiteSpace(input[i]))
-                {
-                    // pokud narazi na bily znak a je ocekavan nazev tagu. Tak je to nazev tagu
-                    if (tag_name_waiting && end_start_tag == -1)
-                    {
-                        buf_tag.TagName = buf.ToString().ToLower();
-                        buf.Clear();
-                        tag_name_waiting = false;
-                        buf_tag.TagType = GetTagDefinitionByTagName(buf_tag.TagName);
-                        continue;
-                    }
-                    else if (buf_begin_tag >= 0 && end_start_tag >= 0)
-                    {
-                        if (buf.ToString() == buf_tag.TagName)
-                        {
-                            equal_tag_count++;
-                            buf.Clear();
-                        }
-                    }
-                    else if (attr_value_waiting && begin_str == '\0')
-                    {
-                        attr_value_waiting = false;
-                        buf_attr.AttributeValue = buf.ToString();
-                        buf.Clear();
-                        buf_tag.HtmlAttributes.Add(buf_attr);
-                        buf_attr = new HtmlAttribute();
-                        begin_str = '\0';
-                    }
-                    else if (attr_value_waiting && begin_str != '\0')
-                    {
-                        buf.Append(input[i]);
-                        continue;
-                    }
-                }
-
-                else if (input[i] == '"' || input[i] == '\'')
-                {
-                    if (attr_value_waiting)
-                    {
-                        if (begin_str == '\0')
-                        {
-                            begin_str = input[i];
-                            continue;
-                        }
-                        else if (begin_str == input[i])
-                        {
-                            if (input[i - 1] == '\\')
-                            {
-                                buf.Append(input[i]);
-                            }
-                            else
-                            {
-                                buf_attr.AttributeValue = buf.ToString();
-                                buf.Clear();
-                                if (buf_tag.TagType != null)
-                                {
-                                    buf_attr.AttributeType = buf_tag.TagType.GetAttributeDefinitionByAttributeName(buf_attr.AttributeName);
-                                }
-                                buf_tag.HtmlAttributes.Add(buf_attr);
-                                buf_attr = new HtmlAttribute();
-                                begin_str = '\0';
-                                attr_value_waiting = false;
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            buf.Append(input[i]);
-                        }
-                    }
-                }
-
-                else if (input[i] == '=')
-                {
-                    if (end_start_tag == -1)
-                    {
-                        if (attr_value_waiting)
-                        {
-                            buf.Append(input[i]);
-                            continue;
-                        }
-                        else
-                        {
-                            attr_value_waiting = true;
-                        }
-                    }
-                    //if (begin_tag && !end_tag && !attr_value_waiting)
-                    //{
-                    //    if (_htmlVersionType == HtmlVersionType.Strict)
-                    //    {
-                    //        throw new HtmlSyntaxException("Neplatný znak '='", count_line, "");
-                    //    }
-                    //}
-                    if (begin_tag && !end_tag && attr_value_waiting) // nacitani názvu atributu
-                    {
-                        buf_attr.AttributeName = buf.ToString();
-                        buf.Clear();
-                    }
-                }
-
-                else if (input[i] == '<')
-                {
-                    // kontrola na komentar
-                    if (i + 1 < input.Length && i + 2 < input.Length && i + 3 < input.Length)
-                    {
-                        if (input[i + 1] == '!' && input[i + 2] == '-' && input[i + 3] == '-')
-                        {
-                            inComment = true;
-                            i += 3;
-                            continue;
-                        }
-                    }
-                    if (begin_tag && end_start_tag == -1)
-                    {
-                        if (_htmlVersionType == HtmlVersionType.Strict)
-                        {
-                            throw new HtmlSyntaxException("Chyba v syntaxi HTML. Nelze použít znak '<'", count_line, "");
-                        }
-                        warning_list.Add($"Chyba v syntaxi HTML. Nelze použít znak '<'|{count_line}");
-                    }
-                    else if (begin_tag && end_start_tag >= 0)
-                    {
-                        if (input[i + 1] == '/')
-                        {
-                            buf_begin_tag = i;
-                            isBuf_end_tag = true;
-                            i++;
-                        }
-                        else
-                        {
-                            buf_begin_tag = i;
-                        }
-                    }
-                    else if (!begin_tag)
-                    {
-                        begin_tag = true;
-                        begin_start_tag = i;
-                        char_request = true;
-                        tag_name_waiting = true;
-                    }
-
-                }
-                else if (input[i] == '>')
-                {
-                    // pokud narazi na bily znak a je ocekavan nazev tagu. Tak je to nazev tagu
-                    if (tag_name_waiting && end_start_tag == -1)
-                    {
-                        end_start_tag = i;
-                        buf_tag.TagName = buf.ToString().ToLower();
-                        buf.Clear();
-                        tag_name_waiting = false;
-                        buf_tag.TagType = GetTagDefinitionByTagName(buf_tag.TagName);
-                        if (buf_tag.TagType != null && buf_tag.TagType.IsPair == SettingPairTag.NotPair)
-                        {
-                            ret.Add(buf_tag);
-                            buf_tag = new HtmlTag();
-                            ret.AddRange(ParseString(input.Remove(begin_start_tag, end_start_tag - begin_start_tag + 1)));
-                        }
-                        continue;
-                    }
-                    else if (end_start_tag == -1)
-                    {
-                        end_start_tag = i;
-                        // pokud je tag ukoncen takhle je neparovy
-                        if (input[i - 1] == '/' || (buf_tag.TagType != null && buf_tag.TagType.IsPair == SettingPairTag.NotPair))
-                        {
-                            ret.Add(buf_tag);
-                            buf_tag = new HtmlTag();
-                            ret.AddRange(ParseString(input.Remove(begin_start_tag, end_start_tag - begin_start_tag + 1)));
-                        }
-                    }
-                    else if (buf_begin_tag >= 0 && end_start_tag >= 0)
-                    {
-                        if (buf.ToString() == buf_tag.TagName)
-                        {
-                            if (equal_tag_count > 0)
-                            {
-                                equal_tag_count--;
-                            }
-                            else
-                            {
-                                if (!isBuf_end_tag)
-                                {
-                                    equal_tag_count++;
-                                    buf.Clear();
-                                }
-                                begin_end_tag = buf_begin_tag;
-                                end_end_tag = i;
-                                //inner = input.Remove(begin_start_tag, end_start_tag - begin_start_tag + 1);
-                                //int offset = input.Length - inner.Length;
-                                //inner = inner.Remove(begin_end_tag - offset, end_end_tag - begin_end_tag + 1);
-                                var inner = input.Remove(begin_end_tag);
-                                inner = inner.Remove(begin_start_tag, end_start_tag - begin_start_tag + 1);
-                                buf_tag.InnerHtml = inner;
-                                buf_tag.InnerTags = ParseString(inner);
-                                ret.Add(buf_tag);
-                                buf_tag = new HtmlTag();
-                                input = input.Remove(begin_start_tag, end_end_tag - begin_start_tag + 1);
-                                if (input.Length > 0)
-                                {
-                                    ret.AddRange(ParseString(input));
-                                }
-                            }
-                        }
-                        buf_begin_tag = -1;
-                        buf.Clear();
-                    }
-                }
-                else
-                {
-                    if (begin_tag && end_start_tag == -1 && attr_value_waiting) // nacitani názvu atributu
-                    {
-                        buf.Append(input[i]);
-                    }
-                }
-            }
-
-
-            return ret.ToArray();
-        }
 
 
     }
@@ -570,6 +233,11 @@ namespace INetCore.Core.Language.HTML
         /// Seznam stylu v attributu class
         /// </summary>
         public List<string> ClassList { get; private set; } = new List<string>();
+
+        /// <summary>
+        /// Identifikator
+        /// </summary>
+        public string ID { get; set; }
 
         /// <summary>
         /// Jméno tagu

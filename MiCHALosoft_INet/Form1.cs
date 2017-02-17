@@ -75,20 +75,36 @@ namespace MiCHALosoft_INet
             INetCore.Drawing.BrowserWindow bw = new INetCore.Drawing.BrowserWindow();
             INetCore.Drawing.Objects.BaseObject main = new INetCore.Drawing.Objects.BaseObject(bw);
 
+
+
             bw.Dock = DockStyle.Fill;
             Controls.Add(bw);
 
+            var main_test_style = "top: 0px; left: 0px; width: 0px; height: 0px; background-color: transparent;";
+            INetCore.Core.Language.CSS.CoreClass.ApplyStyles(main, main_test_style);
 
             var ss = new CoreClass();
-            var t = System.IO.File.ReadAllText("C:\\Temp\\test2.html");
+            var t = System.IO.File.ReadAllText("C:\\Temp\\test_old.html");
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(t);
             //var tag = ss.ParseString(t);
-            var completeList = new List<INetCore.Drawing.Objects.BaseObject>(100);
-            main = ss.ToBaseObjects(bw, t, completeList);
+            main = ss.ToBaseObjects(bw, doc);
 
-            var styles = new CSSLinq(completeList.ToArray());
-            styles.LoadStyleFromFile("C:\\Temp\\test.css");
+            var styles = new CSSLinq(main);
+            styles.LoadStyleFromFile("C:\\Temp\\test_old.css");
 
+            var stylesOnPage = doc.DocumentNode.SelectNodes("//style");
+            if (stylesOnPage != null)
+            {
+                foreach (var node in stylesOnPage)
+                {
+                    styles.LoadStyle(node.InnerText);
+                }
+            }
 
+            styles.ApplyStyle();
+            //css2xpath.PreloadRules();
+            //css2xpath.Transform("div[data-attr=value] > .test > div.test .prase > #test [attr] ");
 
             main.Draw();
 
@@ -107,7 +123,6 @@ namespace MiCHALosoft_INet
             Console.WriteLine(@"Test color CSS [RGB]: " + clr.ToString(CSSColorTypeUsed.Rgb));
             Console.WriteLine(@"Test color CSS [HSL]: " + clr.ToString(CSSColorTypeUsed.Hsl));
             Console.WriteLine(@"Test color CSS [Original]: " + clr.ToString(CSSColorTypeUsed.Original));
-            Console.WriteLine(@"Test color CSS [Default]: " + clr);
 
             //Console.WriteLine("HTML: " + main.ToHTML());
         }

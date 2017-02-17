@@ -172,76 +172,40 @@ namespace INetCore.Core.Language.HTML
     /// </summary>
     public class HtmlAttributeDefinition
     {
-        private string _attributeName = "";
-        private string _attributeDefaultValue = "";
-        private string _valueValidateRegexp = "";
-        private bool _validateRequired = false;
-        private bool _attributeRequired = false;
-        private bool _isAttributeNameRegexp = false;
-        private List<string> _supportHtmlVersion = new List<string>();
-
         /// <summary>
         /// Jméno atributu
         /// </summary>
-        public string AttributeName
-        {
-            get { return _attributeName; }
-            set { this._attributeName = value; }
-        }
+        public string AttributeName { get; set; } = "";
 
         /// <summary>
         /// Výchozí hodnota atributu, je-li atribut povinný a není použit je nastaven s výchozi hodnotou
         /// </summary>
-        public string AttributeDefaultValue
-        {
-            get { return _attributeDefaultValue; }
-            set { this._attributeDefaultValue = value; }
-        }
+        public string AttributeDefaultValue { get; set; } = "";
 
         /// <summary>
         /// Nastavení podporovaných verzí HTML
         /// </summary>
-        public List<string> SupportedHtmlVersion
-        {
-            get { return _supportHtmlVersion; }
-            set { this._supportHtmlVersion = value; }
-        }
+        public List<string> SupportedHtmlVersion { get; set; } = new List<string>();
 
         /// <summary>
         /// Regularni výraz pro validaci hodnoty atributu
         /// </summary>
-        public string AttributeValueValidateRegExp
-        {
-            get { return _valueValidateRegexp; }
-            set { this._valueValidateRegexp = value; }
-        }
+        public string AttributeValueValidateRegExp { get; set; } = "";
 
         /// <summary>
         /// Nastaveni povinosti validace, pokud je true, pak je validace povinna
         /// </summary>
-        public bool AttributeValidateRequired
-        {
-            get { return _validateRequired; }
-            set { this._validateRequired = value; }
-        }
+        public bool AttributeValidateRequired { get; set; } = false;
 
         /// <summary>
         /// Nastavení zda je atribut pro tag povinný. True pokud je povinný
         /// </summary>
-        public bool AttributeRequired
-        {
-            get { return _attributeRequired; }
-            set { this._attributeRequired = value; }
-        }
+        public bool AttributeRequired { get; set; } = false;
 
         /// <summary>
         /// Nastavení zda je název atributu utvořen regulárním výrazem. True pokud je povinný
         /// </summary>
-        public bool IsAttributeNameRegexp
-        {
-            get { return _isAttributeNameRegexp; }
-            set { this._isAttributeNameRegexp = value; }
-        }
+        public bool IsAttributeNameRegexp { get; set; } = false;
 
         public bool IsSupportedVersion(CoreClass.HTMLVersion htmlVersion, HtmlVersionType htmlType)
         {
@@ -250,18 +214,18 @@ namespace INetCore.Core.Language.HTML
 
         public HtmlAttributeDefinition(string attributeName, string attributeDefaultValue = "", string attributeValueRegexp = "", bool validateRequired = false, bool attributeRequired = false, bool isAttributeNameRegexp = false)
         {
-            _attributeName = attributeName;
-            _attributeDefaultValue = attributeDefaultValue;
-            _valueValidateRegexp = attributeValueRegexp;
-            _validateRequired = validateRequired;
-            _attributeRequired = attributeRequired;
-            _isAttributeNameRegexp = isAttributeNameRegexp;
+            AttributeName = attributeName;
+            AttributeDefaultValue = attributeDefaultValue;
+            AttributeValueValidateRegExp = attributeValueRegexp;
+            AttributeValidateRequired = validateRequired;
+            AttributeRequired = attributeRequired;
+            IsAttributeNameRegexp = isAttributeNameRegexp;
         }
 
         #region Override method
         public override string ToString()
         {
-            return AttributeName + "='" + _attributeDefaultValue +"'";
+            return AttributeName + "='" + AttributeDefaultValue +"'";
         }
         #endregion
     }

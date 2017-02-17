@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Linq;
+using INetCore.Core.Language.CSS;
+using INetCore.Core.Language.CSS.Styles;
 using INetCore.Core.Language.HTML;
 
 namespace INetCore.Drawing.Objects
@@ -11,6 +13,8 @@ namespace INetCore.Drawing.Objects
     {
         #region Set delegates and events
         // udalost clicku
+        public delegate void ObjectClick(object sender, Core.Language.JavaScript.Events.Mouse.Click e);
+        public event ObjectClick OnObjectClick;
 
         #endregion
 
@@ -35,16 +39,21 @@ namespace INetCore.Drawing.Objects
         private Float _float = Float.None;
         private int _zIndex = 0;
         private float _opacity = 1;
-        private Core.Language.HTML.HtmlTag _objType = null;
+        private HtmlAgilityPack.HtmlNode _objType = null;
         private Core.Language.HTML.CoreClass _htmlCoreClass = null;
 
+        private Core.Language.JavaScript.EventManager _eventManager = new Core.Language.JavaScript.EventManager();
 
-        private List<Core.Language.CSS.CssProperty> _cssProperties = new List<Core.Language.CSS.CssProperty>(); // pouzite vlastnosti
+        internal Dictionary<string, BaseStyle> _cssProperties = new Dictionary<string, BaseStyle>(); // pouzite vlastnosti
 
         private string _objectName;
+        private List<Style> _usedStyle = new List<Style>();
 
         #region Property
-
+        /// <summary>
+        /// Seznam použitých stylů
+        /// </summary>
+        public Style[] UsedStyles => _usedStyle.ToArray();
         public DisplayProperty Display
         {
             get { return _display; }
@@ -56,7 +65,7 @@ namespace INetCore.Drawing.Objects
             get { return _font; }
             set { _font = value; }
         }
-        public Core.Language.HTML.HtmlTag ObjectType
+        public HtmlAgilityPack.HtmlNode ObjectType
         {
             get { return _objType; }
             set { _objType = value; }
@@ -186,7 +195,7 @@ namespace INetCore.Drawing.Objects
         #endregion
 
         #region Static Methods
-        public static BaseObject ParseFromTag(Core.Language.HTML.HtmlTag tag, BaseObject parentObject = null)
+        public static BaseObject ParseFromTag(HtmlAgilityPack.HtmlNode tag, BaseObject parentObject = null)
         {
             BaseObject b = new BaseObject(parentObject);
 
@@ -196,7 +205,7 @@ namespace INetCore.Drawing.Objects
             b.Width = 100;
             #endregion
 
-            if (tag.TagType.TagName == "div")
+            if (tag.Name == "div")
             {
                 b.ObjectType = tag;
             }
@@ -243,7 +252,7 @@ namespace INetCore.Drawing.Objects
         {
             //System.Windows.Forms.Cursor.Position
 
-            _browser.Click += browser_Click;
+            _browser.Click += new EventHandler(browser_Click);
         }
 
         // zpracovaní kliknuti do prohlížeče
@@ -257,6 +266,7 @@ namespace INetCore.Drawing.Objects
             {
                 Console.WriteLine($"[{Background.Color}] Click: {cp}");
 
+                OnObjectClick?.Invoke(this, new Core.Language.JavaScript.Events.Mouse.Click(null, this, _parent, Core.Language.JavaScript.Events.Mouse.MouseButton.Left));
             }
             //throw new NotImplementedException();
         }
@@ -281,11 +291,12 @@ namespace INetCore.Drawing.Objects
             _browser.VerticalScroll.Enabled = true;
             _font = new Font();
 
-            _objType = new Core.Language.HTML.HtmlTag
-            {
-                TagName = "div",
-                TagType = _htmlCoreClass.GetTagDefinitionByTagName("div")
-            };
+            //_objType = new Core.Language.HTML.HtmlTag
+            //{
+            //    TagName = "div",
+            //    TagType = _htmlCoreClass.GetTagDefinitionByTagName("div")
+            //};
+
             AllocEvents();
         }
 
@@ -299,61 +310,32 @@ namespace INetCore.Drawing.Objects
             Core.Language.CSS.CoreClass.ApplyStyles(this, styles);
         }
 
+        public void ApplyStyles(Style style)
+        {
+            _usedStyle.Add(style);
+
+            foreach (var s in style.Styles)
+            {
+                ApplyProperty(s);
+            }
+        }
+
 
         public string ToHTML()
         {
             StringBuilder ret = new StringBuilder();
 
-            ret.AppendFormat("<{0}", _objType.TagName);
+            ret.AppendFormat("<{0}", _objType.Name);
 
             var style = GenerateStyleString();
             if (style.Length > 0)
             {
-                _objType.SetAttribute("style", style);
+                _objType.Attributes.Add("style", style);
+                //_objType.Attributes["style"].Value = style;
                 //_objType.HtmlAttributes.Add(new Core.Language.HTML.HtmlAttribute("style", style));
             }
 
-            if (_objType.HtmlAttributes.Count > 0)
-            {
-                //ret.Append(" ");
-
-                foreach (var a in _objType.HtmlAttributes)
-                {
-                    if (a.AttributeType != null && a.AttributeType.AttributeValidateRequired)
-                    {
-                        System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(a.AttributeType.AttributeValueValidateRegExp);
-                        if (r.IsMatch(a.AttributeValue))
-                        {
-                            ret.AppendFormat(" {0}=\"{1}\"", a.AttributeName, a.AttributeValue);
-                        }
-                        else
-                        {
-                            ret.AppendFormat(" {0}=\"{1}\"", a.AttributeName, a.AttributeValue);
-                            _browser.AddWarning($"Chybná hodnota atributu '{a.AttributeName}'");
-                        }
-                    }
-                    else
-                    {
-                        ret.AppendFormat(" {0}=\"{1}\"", a.AttributeName, a.AttributeValue);
-                    }
-                }
-            }
-            if (_objType.TagType != null && (_objType.TagType.IsPair == Core.Language.HTML.SettingPairTag.NotPair || _objType.TagType.IsPair == Core.Language.HTML.SettingPairTag.Both && _childrens.Count == 0))
-            {
-                ret.Append(" />");
-            }
-            else
-            {
-                ret.Append(">");
-                ret.Append(InnerText);
-                foreach (var c in _childrens)
-                {
-                    ret.Append(c.ToHTML());
-                }
-                ret.AppendFormat("</{0}>", _objType.TagName);
-            }
-
-            return ret.ToString();
+            return _objType.OuterHtml;
         }
 
         #region Generovani style stringu
@@ -676,7 +658,7 @@ namespace INetCore.Drawing.Objects
             return MeasuredUnit.UnitToString(unit);
         }
 
-        public BaseObject CreateStructure(HtmlTag[] tags, BrowserWindow bw)
+        public BaseObject CreateStructure(IEnumerable<HtmlAgilityPack.HtmlNode> tags, BrowserWindow bw)
         {
             var obj = new BaseObject(bw);
 
@@ -685,15 +667,15 @@ namespace INetCore.Drawing.Objects
             return obj;
         }
 
-        private List<BaseObject> createStructure(BaseObject parent, HtmlTag[] tags)
+        private List<BaseObject> createStructure(BaseObject parent, IEnumerable<HtmlAgilityPack.HtmlNode> tags)
         {
-            var objs = new List<BaseObject>(tags.Length);
+            var objs = new List<BaseObject>(tags.Count());
 
             foreach (var htmlTag in tags)
             {
                 var obj = new BaseObject(parent);
                 obj.ObjectType = htmlTag;
-                obj.Childrens = createStructure(obj, htmlTag.InnerTags);
+                obj.Childrens = createStructure(obj, htmlTag.ChildNodes);
             }
 
             return objs;

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiCHALosoft_INet", "MiCHALosoft_INet\MiCHALosoft_INet.csproj", "{63A4DBC6-7BC3-47E3-AC33-F114CEA4E3C7}"
 EndProject
