@@ -76,11 +76,11 @@ namespace INetCore.Core.Language.CSS
 
             foreach (var o in objs)
             {
-                if (name.ID != null)
+                if (!string.IsNullOrEmpty(name.ID))
                 {
                     if (o.ObjectType.Id != name.ID) continue;
                 }
-                if (name.TagName != null)
+                if (!string.IsNullOrEmpty(name.TagName))
                 {
                     if (!(o.ObjectType.Name == name.TagName || name.TagName == "*")) continue;
                 }
@@ -119,9 +119,9 @@ namespace INetCore.Core.Language.CSS
         {
             if (obj.Childrens == null) return;
 
+            _objs.AddRange(obj.Childrens);
             foreach (var o in obj.Childrens)
             {
-                _objs.AddRange(o.Childrens);
                 _findAllSubelements(o, ref _objs);
             }
         }
@@ -166,7 +166,7 @@ namespace INetCore.Core.Language.CSS
                 if (name.Attrs != null && name.Attrs.Length > 0)
                 {
                     if (name.Attrs.Any(s => o.ObjectType.Attributes.Any(item => CSSAttributeInfo.CheckStatus(s, item.Name, item.Name))))
-                            continue;
+                        continue;
                 }
                 if (name.PseudoTokens != null && name.PseudoTokens.Length > 0)
                 {

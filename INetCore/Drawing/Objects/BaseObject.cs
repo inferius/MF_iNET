@@ -11,13 +11,6 @@ namespace INetCore.Drawing.Objects
 {
     public class BaseObject : Object
     {
-        #region Set delegates and events
-        // udalost clicku
-        public delegate void ObjectClick(object sender, Core.Language.JavaScript.Events.Mouse.Click e);
-        public event ObjectClick OnObjectClick;
-
-        #endregion
-
         Dictionary<Location, Border> _border = new Dictionary<Location, Border>(4);
         private DisplayProperty _display = new DisplayProperty();
         private BaseObject _parent = null;  // nadrazeny object
@@ -41,8 +34,6 @@ namespace INetCore.Drawing.Objects
         private float _opacity = 1;
         private HtmlAgilityPack.HtmlNode _objType = null;
         private Core.Language.HTML.CoreClass _htmlCoreClass = null;
-
-        private Core.Language.JavaScript.EventManager _eventManager = new Core.Language.JavaScript.EventManager();
 
         internal Dictionary<string, BaseStyle> _cssProperties = new Dictionary<string, BaseStyle>(); // pouzite vlastnosti
 
@@ -248,29 +239,7 @@ namespace INetCore.Drawing.Objects
             Init();
         }
 
-        private void AllocEvents()
-        {
-            //System.Windows.Forms.Cursor.Position
-
-            _browser.Click += new EventHandler(browser_Click);
-        }
-
-        // zpracovaní kliknuti do prohlížeče
-        void browser_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.MouseEventArgs em = e as System.Windows.Forms.MouseEventArgs;
-
-            DrawingPoint cp = em.Location;//System.Windows.Forms.Cursor.Position;
-
-            if (IsPointInObject(cp))
-            {
-                Console.WriteLine($"[{Background.Color}] Click: {cp}");
-
-                OnObjectClick?.Invoke(this, new Core.Language.JavaScript.Events.Mouse.Click(null, this, _parent, Core.Language.JavaScript.Events.Mouse.MouseButton.Left));
-            }
-            //throw new NotImplementedException();
-        }
-
+        
         private void Init()
         {
             // nastaveni vychozích dat
@@ -296,8 +265,6 @@ namespace INetCore.Drawing.Objects
             //    TagName = "div",
             //    TagType = _htmlCoreClass.GetTagDefinitionByTagName("div")
             //};
-
-            AllocEvents();
         }
 
         public void ApplyProperty(Core.Language.CSS.Styles.BaseStyle prop)
